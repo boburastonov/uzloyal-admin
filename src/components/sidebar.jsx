@@ -7,6 +7,7 @@ import { HiUsers } from "react-icons/hi";
 import { TbSettingsCog } from "react-icons/tb";
 import { GrResources } from "react-icons/gr";
 import { OpenContext } from "../layout/layout";
+import { useLocation } from "react-router-dom"; // window.location.pathname o'rniga useLocation'dan foydalanamiz
 
 const sidebarData = [
   {
@@ -17,7 +18,7 @@ const sidebarData = [
   },
   { id: 2, title: "Faqs", icon: <HiUsers />, path: "/faqs" },
   { id: 3, title: "News", icon: <IoNewspaper />, path: "/news" },
-  { id: 4, title: "Blogs", icon: <FaBlogger />, path: "/Blogs" },
+  { id: 4, title: "Blogs", icon: <FaBlogger />, path: "/blogs" },
   {
     id: 5,
     title: "Services",
@@ -29,17 +30,20 @@ const sidebarData = [
 
 const Sidebar = () => {
   const { open } = useContext(OpenContext);
-  const [activeItem, setActiveItem] = useState();
+  const location = useLocation(); // window.location.pathname o'rniga useLocation ishlatilmoqda
+  const [activeItem, setActiveItem] = useState(null); // Dastlab activeItem ni null qilib belgilaymiz
 
+  // URL asosida active itemni o'rnatamiz, agar topilmasa active bo'lmasin
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const currentItem = sidebarData.find((item) => item.path === currentPath);
+    const currentItem = sidebarData.find(
+      (item) => item.path === location.pathname
+    );
     if (currentItem) {
       setActiveItem(currentItem.id);
     } else {
-      setActiveItem(sidebarData[0].id); // Default to the first item
+      setActiveItem(null); // Home page bo'lsa, active item bo'lmaydi
     }
-  }, []);
+  }, [location]);
 
   const handleItemClick = (id) => {
     setActiveItem(id);
@@ -70,9 +74,11 @@ const Sidebar = () => {
         {sidebarData.map((item) => (
           <li
             key={item.id}
-            className={`${activeItem === item.id ? "active" : ""} m-1 ${
+            className={`${
+              activeItem === item.id ? "bg-[#1677FF] text-white" : ""
+            } m-1 ${
               open ? "pl-6" : "pl-4"
-            } pr-4 py-3 rounded-[10px]`}
+            } pr-4 py-3 rounded-[10px] transition-all duration-[0.3s]`}
             onClick={() => handleItemClick(item.id)}
           >
             <a
