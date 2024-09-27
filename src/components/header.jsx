@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RiMenuFoldFill, RiMenuUnfoldFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
+import { OpenContext } from "../layout/layout";
 
-const Header = ({ open, setOpen }) => {
+const Header = () => {
+  const { open, setOpen } = useContext(OpenContext);
   const logOut = () => {
     localStorage.removeItem("token");
   };

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { OpenContext } from "../layout/layout";
 
-const Footer = ({ open }) => {
+const Footer = () => {
+  const { open } = useContext(OpenContext);
   return (
     <footer
       className={`${
