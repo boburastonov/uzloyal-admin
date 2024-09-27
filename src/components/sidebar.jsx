@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { FaBlogger } from "react-icons/fa6";
 import { BiSolidCategory } from "react-icons/bi";
@@ -6,6 +6,7 @@ import Logo from "../assets/logo.png";
 import { HiUsers } from "react-icons/hi";
 import { TbSettingsCog } from "react-icons/tb";
 import { GrResources } from "react-icons/gr";
+import { OpenContext } from "../layout/layout";
 
 const sidebarData = [
   {
@@ -26,7 +27,8 @@ const sidebarData = [
   { id: 6, title: "Sources", icon: <GrResources />, path: "/sources" },
 ];
 
-const Sidebar = ({ open }) => {
+const Sidebar = () => {
+  const { open } = useContext(OpenContext);
   const [activeItem, setActiveItem] = useState();
 
   useEffect(() => {
